@@ -1,0 +1,19 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: ${CONTAINER_NAME}
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    volumes:
+      - redis-data:/var/lib/redis
+    ports:
+      - "${ALLOW_HOST}:${REDIS_PORT}:6379"
+    networks:
+      - ${NETWORK_NAME}
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  ${NETWORK_NAME}:
+    external: true
